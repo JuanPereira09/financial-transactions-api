@@ -1,0 +1,5 @@
+echo venv/ >> .gitignore
+git rm -r --cached venv
+git add .gitignore
+git commit -m "Adicionando gitignore para ignorar venv"__pycache__/ 
+git 
