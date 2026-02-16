@@ -1,56 +1,36 @@
 💰 Financial Transactions API
 
 API REST desenvolvida em Python + FastAPI para gerenciamento de transações financeiras com autenticação JWT, persistência em MySQL, suporte a CRUD completo, filtros, relatórios e integração via CLI e API.
-
 Projeto construído com foco em:
-
 Boas práticas de backend
-
 Organização em camadas (services, db, auth)
-
 Autenticação segura com OAuth2 + JWT
-
 Integração real com banco relacional
 
 🚀 Funcionalidades
 🔐 Autenticação
 
 ✅ Registro de usuários
-
 ✅ Login com OAuth2 Password Flow
-
 ✅ Hash seguro com bcrypt
-
 ✅ Geração de JWT
-
 ✅ Rotas protegidas com Bearer Token
 
 💰 Transações
 
 ✅ Criar transações (entrada e saída)
-
 ✅ Listar transações
-
 ✅ Atualizar transações
-
 ✅ Deletar transações
-
 ✅ Filtro por tipo (INCOME / EXPENSE)
-
 ✅ Filtro por categoria
-
 ✅ Cálculo de saldo total
-
 ✅ Relatórios financeiros
-
 ✅ Transações vinculadas ao usuário autenticado
 
 🧩 Extras
-
 ✅ Integração com MySQL
-
 ✅ Documentação automática via Swagger
-
 ✅ Interface via CLI
 
 🧱 Arquitetura do Projeto
@@ -73,19 +53,12 @@ financial_transactions_sql/
 🛠️ Tecnologias Utilizadas
 
 Python 3.11
-
 FastAPI
-
 MySQL
-
 Uvicorn
-
 Pydantic
-
 Passlib (bcrypt)
-
 Python-JOSE (JWT)
-
 OAuth2PasswordBearer
 
 mysql-connector-python
@@ -105,9 +78,7 @@ pip install -r requirements.txt
 4️⃣ Configure o banco de dados MySQL
 
 Crie o banco:
-
 CREATE DATABASE finance_manager;
-
 
 Crie a tabela de usuários:
 
@@ -117,7 +88,6 @@ CREATE TABLE users (
     email VARCHAR(150) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL
 );
-
 
 Crie a tabela de transações:
 
@@ -132,7 +102,6 @@ CREATE TABLE transactions (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-
 Configure suas credenciais em:
 
 db/connection.py
@@ -140,16 +109,13 @@ db/connection.py
 ▶️ Rodando a API
 uvicorn api:app --reload
 
-
 Acesse:
-
 http://127.0.0.1:8000/docs
 
 🔐 Fluxo de Autenticação
+
 1️⃣ Registrar usuário
-
 POST /register
-
 {
   "username": "juan",
   "email": "juan@email.com",
@@ -157,23 +123,18 @@ POST /register
 }
 
 2️⃣ Login
-
 POST /login
 
 Use o botão 🔒 Authorize no Swagger e informe:
 
 username
-
 password
 
 O sistema gera automaticamente o JWT.
 
 3️⃣ Rotas protegidas
-
 Exemplo:
-
 GET /protected
-
 
 Requer token Bearer válido.
 
