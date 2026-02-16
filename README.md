@@ -34,7 +34,6 @@ Rotas protegidas com Bearer Token
 
 💳 Transações Financeiras
 
-<<<<<<< HEAD
 ✅ Criar transações (entrada e saída)
 ✅ Listar transações
 ✅ Atualizar transações
@@ -124,7 +123,6 @@ Crie a tabela de usuários:
 Criar banco:
 
 CREATE DATABASE finance_manager;
-
 
 Criar tabela de usuários:
 
