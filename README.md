@@ -1,53 +1,24 @@
 💰 Financial Transactions API
 
-API REST desenvolvida em Python + FastAPI para gerenciamento de transações financeiras com autenticação JWT, persistência em MySQL, suporte a CRUD completo, filtros, relatórios e integração via CLI e API.
-Projeto construído com foco em:
-Boas práticas de backend
-Organização em camadas (services, db, auth)
-Autenticação segura com OAuth2 + JWT
-Integração real com banco relacional
+Backend REST desenvolvido com Python + FastAPI para gerenciamento de transações financeiras com autenticação JWT e persistência em MySQL.
+
+Projeto focado em arquitetura organizada, segurança e boas práticas de desenvolvimento backend.
 
 🚀 Funcionalidades
-🔐 Autenticação
-
-✅ Registro de usuários
-✅ Login com OAuth2 Password Flow
-✅ Hash seguro com bcrypt
-✅ Geração de JWT
-✅ Rotas protegidas com Bearer Token
-API REST desenvolvida com Python + FastAPI para gerenciamento de transações financeiras, com autenticação JWT, persistência em MySQL e arquitetura organizada em camadas.
-
-Projeto focado em boas práticas de backend, autenticação segura e estrutura profissional.
-
-🚀 Principais Funcionalidades
 🔐 Autenticação
 
 Registro de usuários
 
 Login com OAuth2 Password Flow
 
-Hash seguro de senha com bcrypt
+Hash de senha com bcrypt
 
 Geração de JWT
 
 Rotas protegidas com Bearer Token
 
-💳 Transações Financeiras
+💳 Transações
 
-✅ Criar transações (entrada e saída)
-✅ Listar transações
-✅ Atualizar transações
-✅ Deletar transações
-✅ Filtro por tipo (INCOME / EXPENSE)
-✅ Filtro por categoria
-✅ Cálculo de saldo total
-✅ Relatórios financeiros
-✅ Transações vinculadas ao usuário autenticado
-
-🧩 Extras
-✅ Integração com MySQL
-✅ Documentação automática via Swagger
-✅ Interface via CLI
 Criar transações (INCOME / EXPENSE)
 
 Listar transações do usuário autenticado
@@ -70,61 +41,61 @@ Integração com MySQL
 
 Documentação automática via Swagger
 
-Interface adicional via CLI
+Interface alternativa via CLI
 
 🧱 Estrutura do Projeto
 financial_transactions_sql/
 │
-├── api.py                # API FastAPI
-├── cli.py                # Interface via terminal
-├── services.py           # Regras de negócio
-├── reports.py            # Relatórios financeiros
-├── auth.py               # Autenticação e JWT
+├── api.py
+├── auth.py
+├── services.py
+├── reports.py
+├── cli.py
 │
 ├── db/
 │   ├── __init__.py
 │   └── connection.py
 │
 ├── requirements.txt
-├── .gitignore
 └── README.md
 
 🛠 Tecnologias Utilizadas
 
 Python 3.11
+
 FastAPI
+
 MySQL
+
 Uvicorn
+
 Pydantic
+
 Passlib (bcrypt)
+
 Python-JOSE (JWT)
+
 OAuth2PasswordBearer
 
 mysql-connector-python
 
-▶️ Como Executar o Projeto
-1️⃣ Clonar o repositório
+▶️ Como Executar
+1️⃣ Clonar repositório
 git clone https://github.com/JuanPereira09/financial-transactions-api.git
 cd financial-transactions-api
 
-2️⃣ Criar e ativar ambiente virtual
+2️⃣ Criar ambiente virtual
 python -m venv venv
-venv\Scripts\activate  # Windows
+venv\Scripts\activate
 
 3️⃣ Instalar dependências
 pip install -r requirements.txt
 
-4️⃣ Configurar banco MySQL
-
-Crie o banco:
+4️⃣ Criar banco MySQL
 CREATE DATABASE finance_manager;
 
-Crie a tabela de usuários:
-Criar banco:
 
-CREATE DATABASE finance_manager;
-
-Criar tabela de usuários:
+Tabela de usuários:
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -133,9 +104,8 @@ CREATE TABLE users (
     password_hash VARCHAR(255) NOT NULL
 );
 
-Crie a tabela de transações:
 
-Criar tabela de transações:
+Tabela de transações:
 
 CREATE TABLE transactions (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -148,61 +118,34 @@ CREATE TABLE transactions (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-Configure suas credenciais em:
-
-db/connection.py
-
-▶️ Rodar a API
+▶️ Rodar API
 uvicorn api:app --reload
 
-Acesse:
+
+Acessar documentação:
+
 http://127.0.0.1:8000/docs
 
 🔐 Fluxo de Autenticação
 
-1️⃣ Registrar usuário
-Registrar usuário
+Registrar usuário:
 
 POST /register
-{
-  "username": "juan",
-  "email": "juan@email.com",
-  "password": "123456"
-}
 
-2️⃣ Login
-POST /login
-
-Use o botão 🔒 Authorize no Swagger e informe:
-
-username
-password
-
-O sistema gera automaticamente o JWT.
-
-3️⃣ Rotas protegidas
-Exemplo:
-Login
+Login:
 
 POST /login
 
-Use o botão 🔒 Authorize no Swagger.
+Após login, usar botão 🔒 Authorize no Swagger.
 
-O sistema gera automaticamente o JWT.
-
-Exemplo de rota protegida
-GET /protected
-
-Requer token Bearer válido.
-
-📌 Principais Endpoints
+📌 Endpoints Principais
 Método	Endpoint	Descrição
-GET	/transactions	Lista transações do usuário
-POST	/transactions	Cria nova transação
+GET	/transactions	Lista transações
+POST	/transactions	Cria transação
 PUT	/transactions/{id}	Atualiza transação
 DELETE	/transactions/{id}	Remove transação
-GET	/balance	Retorna saldo total
-GET	/reports	Gera relatório financeiro
+GET	/balance	Retorna saldo
+GET	/reports	Relatório financeiro
 🖥 Uso via CLI
 python cli.py list
 python cli.py add
