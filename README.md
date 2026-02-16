@@ -15,9 +15,26 @@ Integração real com banco relacional
 ✅ Hash seguro com bcrypt
 ✅ Geração de JWT
 ✅ Rotas protegidas com Bearer Token
+API REST desenvolvida com Python + FastAPI para gerenciamento de transações financeiras, com autenticação JWT, persistência em MySQL e arquitetura organizada em camadas.
 
-💰 Transações
+Projeto focado em boas práticas de backend, autenticação segura e estrutura profissional.
 
+🚀 Principais Funcionalidades
+🔐 Autenticação
+
+Registro de usuários
+
+Login com OAuth2 Password Flow
+
+Hash seguro de senha com bcrypt
+
+Geração de JWT
+
+Rotas protegidas com Bearer Token
+
+💳 Transações Financeiras
+
+<<<<<<< HEAD
 ✅ Criar transações (entrada e saída)
 ✅ Listar transações
 ✅ Atualizar transações
@@ -32,8 +49,31 @@ Integração real com banco relacional
 ✅ Integração com MySQL
 ✅ Documentação automática via Swagger
 ✅ Interface via CLI
+Criar transações (INCOME / EXPENSE)
 
-🧱 Arquitetura do Projeto
+Listar transações do usuário autenticado
+
+Atualizar transações
+
+Deletar transações
+
+Filtro por tipo
+
+Filtro por categoria
+
+Cálculo automático de saldo
+
+Relatórios financeiros
+
+🧩 Extras
+
+Integração com MySQL
+
+Documentação automática via Swagger
+
+Interface adicional via CLI
+
+🧱 Estrutura do Projeto
 financial_transactions_sql/
 │
 ├── api.py                # API FastAPI
@@ -50,7 +90,7 @@ financial_transactions_sql/
 ├── .gitignore
 └── README.md
 
-🛠️ Tecnologias Utilizadas
+🛠 Tecnologias Utilizadas
 
 Python 3.11
 FastAPI
@@ -63,24 +103,30 @@ OAuth2PasswordBearer
 
 mysql-connector-python
 
-▶️ Como rodar o projeto
-1️⃣ Clone o repositório
+▶️ Como Executar o Projeto
+1️⃣ Clonar o repositório
 git clone https://github.com/JuanPereira09/financial-transactions-api.git
 cd financial-transactions-api
 
-2️⃣ Crie e ative o ambiente virtual
+2️⃣ Criar e ativar ambiente virtual
 python -m venv venv
-venv\Scripts\activate   # Windows
+venv\Scripts\activate  # Windows
 
-3️⃣ Instale as dependências
+3️⃣ Instalar dependências
 pip install -r requirements.txt
 
-4️⃣ Configure o banco de dados MySQL
+4️⃣ Configurar banco MySQL
 
 Crie o banco:
 CREATE DATABASE finance_manager;
 
 Crie a tabela de usuários:
+Criar banco:
+
+CREATE DATABASE finance_manager;
+
+
+Criar tabela de usuários:
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -90,6 +136,8 @@ CREATE TABLE users (
 );
 
 Crie a tabela de transações:
+
+Criar tabela de transações:
 
 CREATE TABLE transactions (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -106,7 +154,7 @@ Configure suas credenciais em:
 
 db/connection.py
 
-▶️ Rodando a API
+▶️ Rodar a API
 uvicorn api:app --reload
 
 Acesse:
@@ -115,6 +163,8 @@ http://127.0.0.1:8000/docs
 🔐 Fluxo de Autenticação
 
 1️⃣ Registrar usuário
+Registrar usuário
+
 POST /register
 {
   "username": "juan",
@@ -134,43 +184,28 @@ O sistema gera automaticamente o JWT.
 
 3️⃣ Rotas protegidas
 Exemplo:
+Login
+
+POST /login
+
+Use o botão 🔒 Authorize no Swagger.
+
+O sistema gera automaticamente o JWT.
+
+Exemplo de rota protegida
 GET /protected
 
 Requer token Bearer válido.
 
-🔎 Endpoints Principais
-🔹 Listar transações
-GET /transactions
-
-🔹 Filtrar por tipo
-GET /transactions?type=EXPENSE
-
-🔹 Filtrar por categoria
-GET /transactions?category=Alimentação
-
-🔹 Criar transação
-POST /transactions
-
-{
-  "description": "Academia",
-  "amount": 150,
-  "category": "Saúde",
-  "type": "EXPENSE"
-}
-
-🔹 Atualizar transação
-PUT /transactions/{id}
-
-🔹 Deletar transação
-DELETE /transactions/{id}
-
-🔹 Ver saldo
-GET /balance
-
-🔹 Relatórios
-GET /reports
-
-🖥️ Uso via CLI
+📌 Principais Endpoints
+Método	Endpoint	Descrição
+GET	/transactions	Lista transações do usuário
+POST	/transactions	Cria nova transação
+PUT	/transactions/{id}	Atualiza transação
+DELETE	/transactions/{id}	Remove transação
+GET	/balance	Retorna saldo total
+GET	/reports	Gera relatório financeiro
+🖥 Uso via CLI
 python cli.py list
 python cli.py add
 python cli.py balance
