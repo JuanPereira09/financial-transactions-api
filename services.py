@@ -1,5 +1,6 @@
 from reports import get_reports
 from db.connection import get_connection
+from auth import hash_password, verify_password, create_access_token
 
 def get_all_transactions(tx_type=None, category=None):
     conn = get_connection()
@@ -122,3 +123,52 @@ def update_transaction(
     conn.commit()
     cursor.close()
     conn.close()
+
+def create_user(username, email, password):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    password_hash = hash_password(password)
+
+    query = """
+    INSERT INTO users (username, email, password_hash)
+    VALUES (%s, %s, %s)
+    """
+
+    cursor.execute(query, (username, email, password_hash))
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+
+def authenticate_user(username, password):
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    query = "SELECT * FROM users WHERE username = %s"
+    cursor.execute(query, (username,))
+    user = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    if not user:
+        return None
+
+    if not verify_password(password, user["password_hash"]):
+        return None
+
+    return user
+
+def login_user(username, password):
+    user = authenticate_user(username, password)
+
+    if not user:
+        return None
+
+    access_token = create_access_token(
+        data={"sub": str(user["id"])}
+    )
+
+    return access_token

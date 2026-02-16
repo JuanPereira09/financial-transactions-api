@@ -1,5 +1,13 @@
-echo venv/ >> .gitignore
-git rm -r --cached venv
-git add .gitignore
-git commit -m "Adicionando gitignore para ignorar venv"__pycache__/ 
-git 
+# Ambiente virtual
+venv/
+
+# Cache Python
+__pycache__/
+*.pyc
+
+# Arquivos de ambiente
+.env
+
+# IDE
+.vscode/
+.idea/

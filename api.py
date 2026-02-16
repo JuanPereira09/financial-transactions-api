@@ -1,5 +1,10 @@
 from fastapi import FastAPI, HTTPException, Query
 from pydantic import BaseModel
+from fastapi.security import OAuth2PasswordRequestForm
+from fastapi import Depends
+from services import create_user, login_user
+from auth import get_current_user
+from fastapi import Depends 
 from services import (
     get_all_transactions,
     get_balance,
@@ -11,14 +16,12 @@ from services import (
 
 app = FastAPI(title="Financial Transactions API")
 
-
-# -------- MODELS --------
+# - MODELS -
 class TransactionCreate(BaseModel):
     description: str
     amount: float
     category: str
     type: str
-
 
 class TransactionUpdate(BaseModel):
     description: str
@@ -26,8 +29,7 @@ class TransactionUpdate(BaseModel):
     category: str
     type: str
 
-
-# -------- ENDPOINTS --------
+# - ENDPOINTS -
 @app.get("/transactions")
 def list_transactions(
     tx_type: str | None = Query(default=None, alias="type"),
@@ -37,7 +39,6 @@ def list_transactions(
         tx_type=tx_type,
         category=category
     )
-
 
 @app.post("/transactions")
 def create_transaction(tx: TransactionCreate):
@@ -51,7 +52,6 @@ def create_transaction(tx: TransactionCreate):
         return {"message": "Transaction created successfully"}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
-
 
 @app.put("/transactions/{transaction_id}")
 def update_transaction_api(transaction_id: int, tx: TransactionUpdate):
@@ -67,7 +67,6 @@ def update_transaction_api(transaction_id: int, tx: TransactionUpdate):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-
 @app.delete("/transactions/{transaction_id}")
 def delete_transaction_api(transaction_id: int):
     try:
@@ -76,7 +75,6 @@ def delete_transaction_api(transaction_id: int):
     except Exception as e:
         raise HTTPException(status_code=404, detail=str(e))
 
-
 @app.get("/balance")
 def balance():
     return {"balance": get_balance()}
@@ -84,3 +82,36 @@ def balance():
 @app.get("/reports")
 def reports():
     return get_reports()
+
+class UserCreate(BaseModel):
+    username: str
+    email: str
+    password: str
+
+class UserLogin(BaseModel):
+    username: str
+    password: str
+
+@app.post("/register")
+def register(user: UserCreate):
+    try:
+        create_user(user.username, user.email, user.password)
+        return {"message": "User created successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.post("/login")
+def login(form_data: OAuth2PasswordRequestForm = Depends()):
+    token = login_user(form_data.username, form_data.password)
+
+    if not token:
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+
+    return {"access_token": token, "token_type": "bearer"}
+
+@app.get("/protected")
+def protected_route(current_user: str = Depends(get_current_user)):
+    return {
+        "message": "Você está autenticado",
+        "user_id": current_user
+    }
